@@ -2,12 +2,14 @@ const path = require("path");
 const HTMLPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin: CleanPlugin } = require("clean-webpack-plugin");
 const CssPlugin = require("mini-css-extract-plugin");
-const OptimizeCssPlugin = require("optimize-css-assets-webpack-plugin");
-const OptimizeJsPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   context: path.join(__dirname, "src"),
   entry: ["@babel/polyfill", "./index.tsx"],
+  output: {
+    filename: "[name].[contenthash].js",
+    path: path.join(__dirname, "dist")
+  },
   module: {
     rules: [
       {
@@ -33,10 +35,6 @@ module.exports = {
       }
     ]
   },
-  output: {
-    filename: "[name].[contenthash].js",
-    path: path.join(__dirname, "dist")
-  },
   plugins: [
     new HTMLPlugin({
       template: "./index.html"
@@ -46,20 +44,16 @@ module.exports = {
       filename: "css/[name].[contenthash].css"
     })
   ],
-  optimization: {
-    splitChunks: {
-      chunks: "all"
-    },
-    minimizer: [new OptimizeCssPlugin(), new OptimizeJsPlugin()]
-  },
   resolve: {
     alias: {
       "@utils": path.join(__dirname, "src/utils")
     },
-    extensions: [".js", ".ts", ".tsx"]
+    extensions: [".js", ".ts", ".tsx", ".jsx"]
   },
   devServer: {
-    port: 4000,
-    historyApiFallback: true
-  }
+    port: 3000,
+    historyApiFallback: true,
+    open: true
+  },
+  mode: "development"
 };
