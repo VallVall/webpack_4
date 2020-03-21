@@ -31,6 +31,27 @@ module.exports = {
               name: "[name].[contenthash].[ext]",
               outputPath: "images"
             }
+          },
+          {
+            loader: "image-webpack-loader",
+            options: {
+              mozjpeg: {
+                quality: 65
+              },
+              optipng: {
+                enabled: false
+              },
+              pngquant: {
+                quality: [0.65, 0.9],
+                speed: 4
+              },
+              gifsicle: {
+                interlaced: false
+              },
+              webp: {
+                quality: 75
+              }
+            }
           }
         ]
       }

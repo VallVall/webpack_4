@@ -10,6 +10,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { useFetch } from "@hooks";
 import * as Swapi from "@client";
 import { People } from "@interfaces";
+import reactPathImage from "../assets/nature.jpg";
 
 export const PeopleList: React.FC = () => {
   const [data, isLoading, isError] = useFetch<People[]>(Swapi.getAll);
@@ -31,7 +32,7 @@ export const PeopleList: React.FC = () => {
               key={people.created}
             >
               <ListItemAvatar>
-                <Avatar />
+                <Avatar src={reactPathImage} />
               </ListItemAvatar>
               <ListItemText
                 primary={people.name}
