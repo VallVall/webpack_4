@@ -2,6 +2,7 @@ const path = require("path");
 const HTMLPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin: CleanPlugin } = require("clean-webpack-plugin");
 const CssPlugin = require("mini-css-extract-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   context: path.join(__dirname, "src"),
@@ -15,7 +16,7 @@ module.exports = {
       {
         test: /\.(t|j)sx?$/,
         exclude: /node_modules/,
-        loader: "babel-loader"
+        use: ["babel-loader", "ts-loader"]
       },
       {
         test: /\.css$/,
@@ -42,11 +43,15 @@ module.exports = {
     new CleanPlugin(),
     new CssPlugin({
       filename: "css/[name].[contenthash].css"
-    })
+    }),
+    new BundleAnalyzerPlugin()
   ],
   resolve: {
     alias: {
-      "@utils": path.join(__dirname, "src/utils")
+      "@utils": path.join(__dirname, "src/utils"),
+      "@hooks": path.join(__dirname, "src/hooks"),
+      "@client": path.join(__dirname, "src/client"),
+      "@interfaces": path.join(__dirname, "src/interfaces")
     },
     extensions: [".js", ".ts", ".tsx", ".jsx"]
   },
